@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage{hyperref} TODO: Add back at the end
+\usepackage{url}
+% \usepackage{amsfonts}
+\usepackage{amsmath}
+%\usepackage{nicefrac}
+%\usepackage{microtype}
+% \usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{graphics}
+\usepackage{newclude} % To solve include starting a new page
+
+% TODO: Change distance after sections and between paragraphs
+% TODO: Change distance before and after title
+
+\title{
+	\rule{\textwidth}{4pt}
+	\textbf{Generative Adversarial Nets}
+	\rule{\textwidth}{2pt}
+}
+\author{
+\begin{tabularx}{\textwidth}{X}
+	\centering
+	\textbf{Ian J. Goodfellow, Jean Pouget-Abadie\mbox{\strut \footnotemark}, Mehdi Mirza, Bing Xu, David Warde-Farley,
+	Sherjil Ozair\mbox{\strut \footnotemark}, Yoshua Bengio\mbox{\strut \footnotemark}}\\
+	\centering
+	Département d’informatique et de recherche opérationnelle\\
+	\centering
+	Université de Montréal\\
+	\centering
+	Montréal, QC H3C 3J7
+\end{tabularx}
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\stepcounter{footnote}
+\footnotetext{Jean Pouget-Abadie is visiting Université de Montréal from Ecole Polytechnique.}
+\stepcounter{footnote}
+\footnotetext{Sherjil Ozair is visiting Université de Montréal from Indian Institute of Technology Delhi.}
+\stepcounter{footnote}
+\footnotetext{Yoshua Bengio is a CIFAR Senior Fellow.}
+
+\setcounter{footnote}{0}
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+
+\include*{content/abstract}
+
+\include*{content/introduction}
+
+\include*{content/related-work}
+
+\bibliography{bib.bib}
+\bibliographystyle{plain}
+
+\end{document}
