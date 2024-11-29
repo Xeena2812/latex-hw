@@ -1,0 +1,41 @@
+\section{Theoretical Results}
+
+The generator $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like %TODO: Algorith 1 reference
+to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
+
+\noindent We will show in %TODO: Section 4.1 reference
+that this minimax game has a global optimum for $p_g = \pdat$. We will then show in %TODO: secntion 4.2 reference
+that %TODO: Algorithm 1 referencde
+optimizes %TODO: Different? Eq 1 reference
+, thus obtaining the desired result.
+%TODO: Algorithm 1
+
+\subsection{Global Optimality of $p_g = \pdat$}
+
+We first consider the optimal discriminator $D$ for any give generator $G$.
+
+\begin{proposition}
+	For $G$ fixed, the optimal discriminator $D$ is
+	\begin{equation}
+		D^{\ast}_G(\bx) = \frac{\pdatx}{\pdatx + p_g(\bx)}
+	\end{equation}
+\end{proposition}
+
+\begin{proof}
+	The training criterion for the discriminator $D$, given any generator $G$, is to maximize the quantity $V(G, D)$
+	\begin{align*}
+		V(G, D) &= \int_{\bx}{\pdatx}\log(D(\bx))dx + \int_{\bz}{p_{\bz}(\bz)\lomdgz}dz\\
+		&= \int_{\bx}{\pdatx}\log(D(\bx)) + \int_{\bz}{p_{\bz}(\bz)\log(1 - D(\bx))}dx %TODO: Eq 3 label
+	\end{align*}
+	For any $(a, b) \in \mathbb{R}^2 \setminus \{0,0\}$, the function $y\rightarrow a\log(Y)+ b\log(1-y)$ achieves its maximum in $][0,1]$ at $\frac{a}{a+b}$. The discriminator does not need to be defined outside of $Supp(\pdat)\cup Supp(p_g)$, concluding the proof.
+\end{proof}
+
+\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax game in %TODO: Equation 1 reference
+can now be reformulate as:
+
+\begin{align*}
+	C(G) &= \underset{D}{\max}V(G,D)\\
+	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bz\sim p_{\bz}}[\log(1-\dastg(G(\bz)))]\\ %TODO: Eq 4 label
+	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bx\sim p_g}[\log(1-\dastg(\bx))]\\
+	&= \exspdat\bigg[\log\frac{\pdatx}{\pdatx+p_g(\bx)}\bigg]+\mathbb{E}_{\bx\sim p_g}\bigg[\log\frac{p_g(\bx)}{\pdatx+p_g(\bx)}\bigg]
+\end{align*}
