@@ -1,0 +1,18 @@
+\section{Conclusion and future work}
+
+This framework admits many straightforward extensions:
+
+\begin{itemize}
+	\item A \emph{conditional generative} model $p(\bz | \boldsymbol{c})$ can be obtained by adding $\boldsymbol{c}$ as input to both $G$ and $D$.
+	\item \emph{Learned approximate inference} can ber performed by training an auxiliary network to predict $\bz$ given $\bx$. This is similar to the inference net trained by the wake-sleep algorithm \cite{15_doi:10.1126/science.7761831} but with the advantage that the inference net may be trained for a fixed generator net after the generator had finished training.
+	\item One can approximately model all conditionals $p(\bx_S | \bx_{\cancel{S}})$ %Not sure why there is a strikethrough here
+	where $S$ is a subset of the indices of $\bx$ by training a family of conditional model that share parameters. Essentially, one can use adversarial nets to implement a stochastic extension of the deterministic MP-DBM \cite{11_NIPS2013_0bb4aec1}.
+	\item \emph{Semi-supervised learning}: features from the discriminator or inference net could improve performance of classifiers when limited labeled data is available.
+	\item \emph{Efficiency improvements}: training could be accelerated greatly by devising better methods for coordinating $G$ and $D$ or determining better distributions to sample $\bz$ from during training.
+\end{itemize}
+
+This paper has demonstrated the viability of the adversarial modeling framework, suggesting that these research directions could prove useful.
+
+\subsection*{Acknowledgements}
+
+We would like to acknowledge Patrice Marcotte, Olivier Delalleau, Kyunghyun Cho, Guillaume Alain and Jason Yosinski for helpful discussions. Yann Dauphin shared his Parzen window evaluation code with us. We would like to thank the developers of Pylearn2 \cite{12_goodfellow2013pylearn2machinelearningresearch} and Theano \cite{7_bergstra-proc-scipy-2010,1_bastien2012theanonewfeaturesspeed}, particularly Frédéric Bastien who rushed a Theano feature specifically to benefit this project. Arnaud Bergeron provided much-needed support with \LaTeX typesetting.  We would also like to thank CIFAR, and Canada Research Chairs for funding, and Compute Canada, and Calcul Québec for providing computational resources. Ian Goodfellow is supported by the 2013 Google Fellowship in Deep Learning. Finally, we would like to thank Les Trois Brasseurs for stimulating our creativity.
