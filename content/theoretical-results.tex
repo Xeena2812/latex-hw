@@ -36,6 +36,46 @@ can now be reformulate as:
 \begin{align*}
 	C(G) &= \underset{D}{\max}V(G,D)\\
 	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bz\sim p_{\bz}}[\log(1-\dastg(G(\bz)))]\\ %TODO: Eq 4 label
-	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bx\sim p_g}[\log(1-\dastg(\bx))]\\
-	&= \exspdat\bigg[\log\frac{\pdatx}{\pdatx+p_g(\bx)}\bigg]+\mathbb{E}_{\bx\sim p_g}\bigg[\log\frac{p_g(\bx)}{\pdatx+p_g(\bx)}\bigg]
+	&= \exspdat[\log \dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]\\
+	&= \exspdat\bigg[\log\frac{\pdatx}{\pdatx+p_g(\bx)}\bigg]+\exspg\bigg[\log\frac{p_g(\bx)}{\pdatx+p_g(\bx)}\bigg]
 \end{align*}
+
+\begin{theorem}
+	The global minimum of the virtual training criterion $C(G)$ is achieved if and only if $p_g=\pdat$. At that point, $C(G)$ achieves the value $-\log4$.
+\end{theorem}
+
+\begin{proof}
+	For $p_g=\pdat$, $\dastg(\bx)=\frac{1}{2}$, (consider%TODO Eq2 ref
+	). Hence, by inspecting %TODO: Eq 4 ref
+	at $\dastg(\bx)=\frac{1}{2}$, we find $C(G)=\log\frac{1}{2}+\log\frac{1}{2}=-\log4$. To see that this is the best possible value of $C(G)$, reached only for $p_g=\pdat$, observe that
+	\begin{equation*}
+		\exspdat[-\log2]+\exspg[-\log2]=-\log4
+	\end{equation*}
+	and that by subtracting this expression from $C(G)=V(\dastg,G)$, we obtain:
+	\begin{equation}
+		C(G)=-\log(4)+KL\bigg(\pdat\Vert\frac{\pdat+p_g}{2}\bigg)+KL\bigg(p_g\Vert\frac{\pdat+p_g}{2}\bigg)
+	\end{equation}
+	where KL is the Kullback–Leibler divergence. We recognize in the previous expression the Jensen–Shannon divergence between the model’s distribution and the data generating process:
+	\begin{equation}
+		C(G)=-\log(4)+2\cdot JSD(\pdat\Vert p_g)
+	\end{equation}
+	Since the Jensen–Shannon divergence between two distributions is always non-negative and zero only when they are equal, we have shown that $C^{\ast}=-\log(4)$ is the global minimum of $C(G)$ and that the only solution is $p_g=p_{data}$, i.e., the generative model perfectly replicating the data generating process.
+\end{proof}
+
+\subsection{Convergence of %TODO: Alg 1 ref
+}
+\begin{proposition}
+	If $G$ and $D$ have enough capacity, and at each step of %TODO: Alg 1 ref
+	, the discriminator is allowed to reach its optimum given $G$, and $p_g$ is updated so as to improve the criterion
+	\begin{equation*}
+		\exspdat[\log\dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]
+	\end{equation*}
+	then $p_g$ converges to $\pdat$.% Missing end . added
+\end{proposition}
+
+\begin{proof}
+	Consider $V(G,D)=U(p_g,D)$ as a function of $p_g$ as done in the above criterion. Note that $U(p_g,D)$ is convex in $p_g$. The subderivatives of a supremum of  convex functions include the derivative of the function at the point where the maximum is attained. In other words, if $f(x)=\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$ and $f_{\alpha}(x)$ is convex in $x$ for every $\alpha$, then $\partial f_{\beta}(x)\in\partial f$ if $\beta=\arg\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$. This is equivalent to computing a gradient descent update for $p_g$ at the optimal $D$ given the corresponding $G$. $\sup_DU(p_g, D)$ is convex in $p_g$ with a unique global optima as proven in %TODO: Weird theorem 1 ref
+	, therefore with sufficiently small updates of $p_g$, $p_g$ converges to $p_x$, concluding the proof.
+\end{proof}
+
+In practice, adversarial nets represent a limited family of $p_g$ distributions via the function $G(\bz; \theta_g)$, and we optimize $\theta)g$ rather than $p_g$ itself. Using a multilayer perceptron to define $G$ introduces multiple critical point in parameter space. However, the excellent performance of multilayer perceptrons in practice suggests that they are a reasonable model to use despite their lack of theoretical guarantees.
