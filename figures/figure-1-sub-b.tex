@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+\begin{axis}[axis lines=none]
+	\blackdottedgauss
+	\greencont{2}{2}
+
+	\addplot[
+		domain=-5:5,
+		samples=30,
+		color=blue,
+		dashed,
+	]
+	{0.35*(1 - (0.75/(1+exp(-1*(x-0))) + 0.25))};
+\end{axis}
+\end{tikzpicture}

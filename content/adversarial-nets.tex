@@ -15,3 +15,4 @@ for a less formal, more pedagogical explanation of the approach. In practice, we
 may not provide sufficient gradient for $G$ to learn well. Early in learning, when $G$ is poor, $D$ can reject samples with high confidence because they are clearly different from the training data. In this case, $\lomdgz$ saturates. Rather than training $G$ to minimize $\lomdgz$ we can train $G$ to maximize $\log D(G(\bz))$. This objective function results in the same fixed point of the dynamics of $G$ and $D$ but provides much stronger gradients early in learning.
 
 % TODO: Figure 1
+\include*{figures/figure-1}

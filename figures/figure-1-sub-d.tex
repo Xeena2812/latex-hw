@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+\begin{axis}[axis lines=none]
+	\blackdottedgauss
+	\greencont{1}{0}
+
+	\addplot[
+		domain=-5:5,
+		samples=30,
+		color=blue,
+		dashed,
+	]
+	{0.125};
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+\begin{axis}[axis lines=none]
+	\blackdottedgauss
+	\greencont{2}{2}
+
+	\addplot[
+		domain=-5:0,
+		samples=30,
+		color=blue,
+		dashed,
+	]
+	{0.05*sin(200*x)+0.25};
+
+	\addplot[
+		domain=0.075:1,
+		samples=30,
+		color=blue,
+		dashed,
+	]
+	{-15*sin(x)+0.25};
+
+	\addplot[
+		domain=1:5,
+		samples=30,
+		color=blue,
+		dashed,
+	]
+	{0.05*sin(200*x)};
+\end{axis}
+\end{tikzpicture}
