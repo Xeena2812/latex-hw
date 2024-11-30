@@ -1,12 +1,37 @@
 \section{Theoretical Results}
 
-The generator $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like %TODO: Algorith 1 reference
-to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
+The generator $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like algorithm \ref{alg: alg 1} to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
 
-\noindent We will show in section \ref{sec: global opt} that this minimax game has a global optimum for $p_g = \pdat$. We will then show in \ref{sec: convergence} that %TODO: Algorithm 1 referencde
-optimizes equation \ref{eq: equation 1}
-, thus obtaining the desired result.
-%TODO: Algorithm 1
+\noindent We will show in section \ref{sec: global opt} that this minimax game has a global optimum for $p_g = \pdat$. We will then show in \ref{sec: convergence} that algorithm \ref{alg: alg 1} optimizes equation \ref{eq: equation 1}, thus obtaining the desired result.
+
+\begin{algorithm}
+    \caption{Minibatch stochastic gradient descent training of generative adversarial nets. The number of steps to apply to the discriminator, $k$, is a hyperparameter. We used $k = 1$, the least expensive option, in our experiments.}
+    \label{alg: alg 1}
+    \begin{algorithmic}
+        \For{number of training iterations}
+        \For{$k$ steps}
+
+            \textbullet \parbox[t]{0.9\linewidth}{Sample minibatch of $m$ noise examples $\{\bz^{(1), \dots, \bz^{(m)}}\}$ from noise prior $p_g(\bz)$.}
+
+			\textbullet \parbox[t]{0.9\linewidth}{Sample minibatch of $m$ examples $\{\bx^{(1), \dots, \bx^{(m)}}\}$ from data generating distribution $\pdatx$.}
+
+			\textbullet Update the discriminator by ascending gradient:
+			\begin{equation*}
+				\nabla_{\theta_d}\frac{1}{m}\sum^m_{i=1}{\bigg[\log D\bigg(\bx^{(i)}\bigg)+\log\bigg(1-D\bigg(G\bigg(\bz^{(i)}\bigg)\bigg)\bigg)\bigg]}.
+			\end{equation*}
+        \EndFor
+
+		\textbullet \parbox[t]{0.9\linewidth}{Sample minibatch of $m$ noise examples $\{\bz^{(1), \dots, \bz^{(m)}}\}$ from noise prior $p_g(\bz)$.}
+
+		\textbullet Update the discriminator by ascending gradient:
+			\begin{equation*}
+				\nabla_{\theta_d}\frac{1}{m}\sum^m_{i=1}{\log\bigg(1-D\bigg(G\bigg(\bz^{(i)}\bigg)\bigg)\bigg)}.
+			\end{equation*}
+		\EndFor
+
+		\noindent\parbox[t]{0.9\linewidth}{The gradient-based updates can use any standard gradient-based learning rule. We used momentum in our experiments.}
+    \end{algorithmic}
+\end{algorithm}
 
 \subsection{Global Optimality of $p_g = \pdat$}\label{sec: global opt}
 
@@ -15,7 +40,7 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 \begin{proposition}
 	For $G$ fixed, the optimal discriminator $D$ is
 	\begin{equation}
-		D^{\ast}_G(\bx) = \frac{\pdatx}{\pdatx + p_g(\bx)}
+		D^{\ast}_G(\bx) = \frac{\pdatx}{\pdatx + p_g(\bx)}\label{eq: equation 2}
 	\end{equation}
 \end{proposition}
 
@@ -39,7 +64,7 @@ can now be reformulate as:
 \end{align}
 
 \begin{theorem}
-	The global minimum of the virtual training criterion $C(G)$ is achieved if and only if $p_g=\pdat$. At that point, $C(G)$ achieves the value $-\log4$.
+	The global minimum of the virtual training criterion $C(G)$ is achieved if and only if $p_g=\pdat$. At that point, $C(G)$ achieves the value $-\log4$.\label{thm: theorem 1}
 \end{theorem}
 
 \begin{proof}
@@ -58,11 +83,9 @@ can now be reformulate as:
 	Since the Jensen–Shannon divergence between two distributions is always non-negative and zero only when they are equal, we have shown that $C^{\ast}=-\log(4)$ is the global minimum of $C(G)$ and that the only solution is $p_g=p_{data}$, i.e., the generative model perfectly replicating the data generating process.
 \end{proof}
 
-\subsection{Convergence of %TODO: Alg 1 ref
-}\label{sec: convergence}
+\subsection{Convergence of Algorithm \ref{alg: alg 1}}\label{sec: convergence}
 \begin{proposition}
-	If $G$ and $D$ have enough capacity, and at each step of %TODO: Alg 1 ref
-	, the discriminator is allowed to reach its optimum given $G$, and $p_g$ is updated so as to improve the criterion
+	If $G$ and $D$ have enough capacity, and at each step of algorithm \ref{alg: alg 1}, the discriminator is allowed to reach its optimum given $G$, and $p_g$ is updated so as to improve the criterion
 	\begin{equation*}
 		\exspdat[\log\dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]
 	\end{equation*}
@@ -70,8 +93,7 @@ can now be reformulate as:
 \end{proposition}
 
 \begin{proof}
-	Consider $V(G,D)=U(p_g,D)$ as a function of $p_g$ as done in the above criterion. Note that $U(p_g,D)$ is convex in $p_g$. The subderivatives of a supremum of  convex functions include the derivative of the function at the point where the maximum is attained. In other words, if $f(x)=\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$ and $f_{\alpha}(x)$ is convex in $x$ for every $\alpha$, then $\partial f_{\beta}(x)\in\partial f$ if $\beta=\arg\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$. This is equivalent to computing a gradient descent update for $p_g$ at the optimal $D$ given the corresponding $G$. $\sup_DU(p_g, D)$ is convex in $p_g$ with a unique global optima as proven in theorem %TODO: Weird theorem 1 ref
-	, therefore with sufficiently small updates of $p_g$, $p_g$ converges to $p_x$, concluding the proof.
+	Consider $V(G,D)=U(p_g,D)$ as a function of $p_g$ as done in the above criterion. Note that $U(p_g,D)$ is convex in $p_g$. The subderivatives of a supremum of  convex functions include the derivative of the function at the point where the maximum is attained. In other words, if $f(x)=\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$ and $f_{\alpha}(x)$ is convex in $x$ for every $\alpha$, then $\partial f_{\beta}(x)\in\partial f$ if $\beta=\arg\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$. This is equivalent to computing a gradient descent update for $p_g$ at the optimal $D$ given the corresponding $G$. $\sup_DU(p_g, D)$ is convex in $p_g$ with a unique global optima as proven in theorem \ref{thm: theorem 1}, therefore with sufficiently small updates of $p_g$, $p_g$ converges to $p_x$, concluding the proof.
 \end{proof}
 
 In practice, adversarial nets represent a limited family of $p_g$ distributions via the function $G(\bz; \theta_g)$, and we optimize $\theta_g$ rather than $p_g$ itself. Using a multilayer perceptron to define $G$ introduces multiple critical point in parameter space. However, the excellent performance of multilayer perceptrons in practice suggests that they are a reasonable model to use despite their lack of theoretical guarantees.
