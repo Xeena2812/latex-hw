@@ -41,4 +41,21 @@ we show samples drawn from the generator net after training. While we make no cl
 	}
 	\caption{Digits obtained by linearly interpolating between coordinates in $\bz$ space of the full model.}
 \end{figure}
-%TODO: Table 2
+
+\begin{table}
+	\renewcommand\tabularxcolumn[1]{m{#1}}
+	\begin{tabularx}{\textwidth}{>{\raggedright}c|X|X|X|X}%{c|l|l|l|l}
+		& Deep directed graphical models & Deep undirected graphical models & Generative autoencoders & Adversarial models\\
+		\hline
+		Training & Inference needed during training. & Inference needed during training. MCMC needed to approximate partition function gradient. & Enforced tradeoff between mixing and power of reconstruction generation. & Synchronizing the discriminator with the generator. Helvetica\\
+		\hline
+		Inference & Learned approximate inference & Variational inference & MCMC-based inference & Learned approximate inference\\
+		\hline
+		Sampling & No difficulties & Requires Markov chain & Requires Markov chain & No difficulties\\
+		\hline
+		Evaluating $p(x)$ & Intractable, may be approximated with AIS & Intractable, may be approximated with AIS & Not explicitly represented, may be approximated with Parzen density estimation & Not explicitly represented, may be approximated with Parzen density estimation\\
+		\hline
+		Model design & Nearly all models incur extreme difficulty & Careful design needed to ensure multiple properties & Any differentiable function is theoretically permitted & Any differentiable function is theoretically permitted\\
+	\end{tabularx}
+	\caption{Challenges in generative modeling: a summary of the difficulties encountered by different approaches to deep generative modeling for each of the major operations involving a model.}
+\end{table}
