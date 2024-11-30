@@ -1,7 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{hyperref}
 \usepackage{url}
 % \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -21,6 +20,7 @@
 \usepackage{epsfig}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{hyperref}
 
 \usetikzlibrary{shapes, calc}
 % For backwards compatibility
@@ -70,6 +70,8 @@
 \setcounter{footnote}{0}
 \renewcommand*{\thefootnote}{\arabic{footnote}}
 
+\chklistlabel{list: toc}\tableofcontents\vfill
+
 \include*{content/abstract}
 \include*{content/introduction}
 \include*{content/related-work}
@@ -78,8 +80,9 @@
 \include*{content/experiments}
 \include*{content/advantages}
 \include*{content/conclusion-ack}
+\include*{content/end-table}
 
-
+\chklistlabel{list: bib}
 \bibliography{bib.bib}
 \bibliographystyle{plain}
 

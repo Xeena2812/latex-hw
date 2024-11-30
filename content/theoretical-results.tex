@@ -2,7 +2,7 @@
 
 The generator $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like algorithm \ref{alg: alg 1} to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
 
-\noindent We will show in section \ref{sec: global opt} that this minimax game has a global optimum for $p_g = \pdat$. We will then show in \ref{sec: convergence} that algorithm \ref{alg: alg 1} optimizes equation \ref{eq: equation 1}, thus obtaining the desired result.
+\noindent We will show in section \ref{sec: global opt} that this minimax game has a global optimum for $p_g = \pdat$. We will then show in section \ref{sec: convergence}\chklistlabel{list: chapter ref} that algorithm \ref{alg: alg 1} optimizes equation \ref{eq: equation 1}, thus obtaining the desired result.
 
 \begin{algorithm}
     \caption{Minibatch stochastic gradient descent training of generative adversarial nets. The number of steps to apply to the discriminator, $k$, is a hyperparameter. We used $k = 1$, the least expensive option, in our experiments.}
@@ -33,7 +33,7 @@ The generator $G$ implicitly defines a probability distribution $p_g$ as the dis
     \end{algorithmic}
 \end{algorithm}
 
-\subsection{Global Optimality of $p_g = \pdat$}\label{sec: global opt}
+\subsection{Global Optimality of $p_g = \pdat$}\label{sec: global opt}\chklistlabel{list: chapter}
 
 We first consider the optimal discriminator $D$ for any give generator $G$.
 
@@ -53,9 +53,9 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 	For any $(a, b) \in \mathbb{R}^2 \setminus \{0,0\}$, the function $y\rightarrow a\log(Y)+ b\log(1-y)$ achieves its maximum in $][0,1]$ at $\frac{a}{a+b}$. The discriminator does not need to be defined outside of $Supp(\pdat)\cup Supp(p_g)$, concluding the proof.
 \end{proof}
 
-\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax game in equation \ref{eq: equation 1}
-can now be reformulate as:
+\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax game in equation \ref{eq: equation 1} can now be reformulate as:
 
+\chklistlabel{list: align}
 \begin{align}
 	C(G) &= \underset{D}{\max}V(G,D)\nonumber\\
 	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bz\sim p_{\bz}}[\log(1-\dastg(G(\bz)))]\label{eq: equation 4} \\
@@ -68,7 +68,7 @@ can now be reformulate as:
 \end{theorem}
 
 \begin{proof}
-	For $p_g=\pdat$, $\dastg(\bx)=\frac{1}{2}$, (consider equation \ref{eq: equation 2}). Hence, by inspecting \ref{eq: equation 4}	at $\dastg(\bx)=\frac{1}{2}$, we find $C(G)=\log\frac{1}{2}+\log\frac{1}{2}=-\log4$. To see that this is the best possible value of $C(G)$, reached only for $p_g=\pdat$, observe that
+	For $p_g=\pdat$, $\dastg(\bx)=\frac{1}{2}$, (consider equation \ref{eq: equation 2}). Hence, by inspecting equation \ref{eq: equation 4}\chklistlabel{list: align ref} at $\dastg(\bx)=\frac{1}{2}$, we find $C(G)=\log\frac{1}{2}+\log\frac{1}{2}=-\log4$. To see that this is the best possible value of $C(G)$, reached only for $p_g=\pdat$, observe that
 	\begin{equation*}
 		\exspdat[-\log2]+\exspg[-\log2]=-\log4
 	\end{equation*}

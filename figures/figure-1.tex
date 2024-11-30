@@ -1,30 +1,6 @@
 % TODO: Figure out how to change density of samples to be around the curving part of Gaussian
 % TODO: Draw lines with tikz foreach
 
-\newcommand{\gaussfunc}[2]{
-	1/(sqrt(2*pi*(#1)^2))*exp(-(x-#2)^2/(2*#1^2))
-}
-\newcommand{\blackdottedgauss}{
-	\addplot[
-		domain=-5:5,
-		samples=30,
-		color=black,
-		mark=*,
-		only marks,
-	]{
-		\gaussfunc{1}{0}
-	};
-}
-
-\newcommand{\greencont}[2]{
-	\addplot[
-		domain=-5:5,
-		samples=60,
-		color=green!60!black,
-	]{
-		\gaussfunc{#1}{#2}
-	};
-}
 \begin{figure}[htb]
 	\resizebox{0.2\textwidth}{!}{\subfigure[]{\include*{figures/figure-1-sub-a}}}\hfill
 	\resizebox{0.2\textwidth}{!}{\subfigure[]{\include*{figures/figure-1-sub-b}}}\hfill
@@ -32,5 +8,5 @@
 	\resizebox{0.2\textwidth}{!}{\subfigure[]{\include*{figures/figure-1-sub-d}}}\hfill
 
 	\caption{Generative adversarial nets are trained by simultaneously updating the \textbf{d}iscriminative distribution ($D$, blue dashed line) so that it discriminates between samples from the data generating distribution (black, dotted line) $p_{\bx}$ from those of \textbf{g}enerative distribution $p_g$ ($G$) (green, solid line). The lower horizontal line is the domain from which $\bz$ is sampled, in this case uniformly. The horizontal line above is part of the domain of $\bx$. The upward arrows show how the mapping $\bx = G(\bz)$ imposes the non-uniform distribution $p_g$ on transformed samples. $G$ contracts in regions of high density and expands in regions of low density of $p_g$. (a) Consider an adversarial pair near convergence: $p_g$ is similar to $\pdat$ and $D$ is a partially accurate classifier.(b) In the inner loop of the algorithm $D$ is trained to discriminate samples from data, converging to $D^{\ast}(\bx) = \frac{\pdatx}{\pdatx+p_g(\bx)}$. (c) After an update to $G$, gradient of $D$ has guided $G(\bz)$ to flow to regions that are more likely to be classified as data. (d) After several steps of training, if $G$ and $D$ have enough capacity, they will reach a point at which both cannot improve because $p_g = \pdat$. The discriminator is unable to differentiate between the two distributions, i.e. $D(\bx)=\frac{1}{2}$.}
-	\label{fig: figure 1}
+	\label{fig: figure 1}\chklistlabel{list: tikz}
 \end{figure}

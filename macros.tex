@@ -1,3 +1,4 @@
+% Math macros
 \newcommand{\bx}{\boldsymbol{x}}
 \newcommand{\bz}{\boldsymbol{z}}
 \newcommand{\pdat}{p_{\mathrm{data}}}
@@ -7,8 +8,41 @@
 \newcommand{\exspg}{\mathbb{E}_{\bx\sim p_g}}
 \newcommand{\dastg}{D^{\ast}_G}
 
+% Figure functions
+\newcommand{\gaussfunc}[2]{
+	1/(sqrt(2*pi*(#1)^2))*exp(-(x-#2)^2/(2*#1^2))
+}
+\newcommand{\blackdottedgauss}{
+	\addplot[
+		domain=-5:5,
+		samples=30,
+		color=black,
+		mark=*,
+		only marks,
+	]{
+		\gaussfunc{1}{0}
+	};
+}
+
+\newcommand{\greencont}[2]{
+	\addplot[
+		domain=-5:5,
+		samples=60,
+		color=green!60!black,
+	]{
+		\gaussfunc{#1}{#2}
+	};
+}
+
 \theoremstyle{plain}
 \newtheorem{proposition}{Proposition}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
+
+% End table macros
+\newcounter{chkcount}
+\newenvironment{chkitem}[1]{\refstepcounter{chkcount}\label{#1}}{}
+\newcommand{\chklistlabel}[1]{\begin{chkitem}{#1}\hspace{-0.3em}
+\end{chkitem}}
+\newcommand{\chklistref}[1]{chklist \ref{#1}}
