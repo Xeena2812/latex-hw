@@ -3,14 +3,12 @@
 The generator $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like %TODO: Algorith 1 reference
 to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
 
-\noindent We will show in %TODO: Section 4.1 reference
-that this minimax game has a global optimum for $p_g = \pdat$. We will then show in %TODO: secntion 4.2 reference
-that %TODO: Algorithm 1 referencde
-optimizes %TODO: Different? Eq 1 reference
+\noindent We will show in section \ref{sec: global opt} that this minimax game has a global optimum for $p_g = \pdat$. We will then show in \ref{sec: convergence} that %TODO: Algorithm 1 referencde
+optimizes equation \ref{eq: equation 1}
 , thus obtaining the desired result.
 %TODO: Algorithm 1
 
-\subsection{Global Optimality of $p_g = \pdat$}
+\subsection{Global Optimality of $p_g = \pdat$}\label{sec: global opt}
 
 We first consider the optimal discriminator $D$ for any give generator $G$.
 
@@ -23,31 +21,29 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 
 \begin{proof}
 	The training criterion for the discriminator $D$, given any generator $G$, is to maximize the quantity $V(G, D)$
-	\begin{align*}
-		V(G, D) &= \int_{\bx}{\pdatx}\log(D(\bx))dx + \int_{\bz}{p_{\bz}(\bz)\lomdgz}dz\\
-		&= \int_{\bx}{\pdatx}\log(D(\bx)) + \int_{\bz}{p_{\bz}(\bz)\log(1 - D(\bx))}dx %TODO: Eq 3 label
-	\end{align*}
+	\begin{align}
+		V(G, D) &= \int_{\bx}{\pdatx}\log(D(\bx))dx + \int_{\bz}{p_{\bz}(\bz)\lomdgz}dz\nonumber\\
+		&= \int_{\bx}{\pdatx}\log(D(\bx)) + \int_{\bz}{p_{\bz}(\bz)\log(1 - D(\bx))}dx \label{eq: equation 3}
+	\end{align}
 	For any $(a, b) \in \mathbb{R}^2 \setminus \{0,0\}$, the function $y\rightarrow a\log(Y)+ b\log(1-y)$ achieves its maximum in $][0,1]$ at $\frac{a}{a+b}$. The discriminator does not need to be defined outside of $Supp(\pdat)\cup Supp(p_g)$, concluding the proof.
 \end{proof}
 
-\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax game in %TODO: Equation 1 reference
+\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax game in equation \ref{eq: equation 1}
 can now be reformulate as:
 
-\begin{align*}
-	C(G) &= \underset{D}{\max}V(G,D)\\
-	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bz\sim p_{\bz}}[\log(1-\dastg(G(\bz)))]\\ %TODO: Eq 4 label
-	&= \exspdat[\log \dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]\\
-	&= \exspdat\bigg[\log\frac{\pdatx}{\pdatx+p_g(\bx)}\bigg]+\exspg\bigg[\log\frac{p_g(\bx)}{\pdatx+p_g(\bx)}\bigg]
-\end{align*}
+\begin{align}
+	C(G) &= \underset{D}{\max}V(G,D)\nonumber\\
+	&= \exspdat[\log \dastg(\bx)] + \mathbb{E}_{\bz\sim p_{\bz}}[\log(1-\dastg(G(\bz)))]\label{eq: equation 4} \\
+	&= \exspdat[\log \dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]\nonumber\\
+	&= \exspdat\bigg[\log\frac{\pdatx}{\pdatx+p_g(\bx)}\bigg]+\exspg\bigg[\log\frac{p_g(\bx)}{\pdatx+p_g(\bx)}\bigg]\nonumber
+\end{align}
 
 \begin{theorem}
 	The global minimum of the virtual training criterion $C(G)$ is achieved if and only if $p_g=\pdat$. At that point, $C(G)$ achieves the value $-\log4$.
 \end{theorem}
 
 \begin{proof}
-	For $p_g=\pdat$, $\dastg(\bx)=\frac{1}{2}$, (consider%TODO Eq2 ref
-	). Hence, by inspecting %TODO: Eq 4 ref
-	at $\dastg(\bx)=\frac{1}{2}$, we find $C(G)=\log\frac{1}{2}+\log\frac{1}{2}=-\log4$. To see that this is the best possible value of $C(G)$, reached only for $p_g=\pdat$, observe that
+	For $p_g=\pdat$, $\dastg(\bx)=\frac{1}{2}$, (consider equation \ref{eq: equation 2}). Hence, by inspecting \ref{eq: equation 4}	at $\dastg(\bx)=\frac{1}{2}$, we find $C(G)=\log\frac{1}{2}+\log\frac{1}{2}=-\log4$. To see that this is the best possible value of $C(G)$, reached only for $p_g=\pdat$, observe that
 	\begin{equation*}
 		\exspdat[-\log2]+\exspg[-\log2]=-\log4
 	\end{equation*}
@@ -63,18 +59,18 @@ can now be reformulate as:
 \end{proof}
 
 \subsection{Convergence of %TODO: Alg 1 ref
-}
+}\label{sec: convergence}
 \begin{proposition}
 	If $G$ and $D$ have enough capacity, and at each step of %TODO: Alg 1 ref
 	, the discriminator is allowed to reach its optimum given $G$, and $p_g$ is updated so as to improve the criterion
 	\begin{equation*}
 		\exspdat[\log\dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]
 	\end{equation*}
-	then $p_g$ converges to $\pdat$.% Missing end . added
+	then $p_g$ converges to $\pdat$.
 \end{proposition}
 
 \begin{proof}
-	Consider $V(G,D)=U(p_g,D)$ as a function of $p_g$ as done in the above criterion. Note that $U(p_g,D)$ is convex in $p_g$. The subderivatives of a supremum of  convex functions include the derivative of the function at the point where the maximum is attained. In other words, if $f(x)=\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$ and $f_{\alpha}(x)$ is convex in $x$ for every $\alpha$, then $\partial f_{\beta}(x)\in\partial f$ if $\beta=\arg\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$. This is equivalent to computing a gradient descent update for $p_g$ at the optimal $D$ given the corresponding $G$. $\sup_DU(p_g, D)$ is convex in $p_g$ with a unique global optima as proven in %TODO: Weird theorem 1 ref
+	Consider $V(G,D)=U(p_g,D)$ as a function of $p_g$ as done in the above criterion. Note that $U(p_g,D)$ is convex in $p_g$. The subderivatives of a supremum of  convex functions include the derivative of the function at the point where the maximum is attained. In other words, if $f(x)=\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$ and $f_{\alpha}(x)$ is convex in $x$ for every $\alpha$, then $\partial f_{\beta}(x)\in\partial f$ if $\beta=\arg\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$. This is equivalent to computing a gradient descent update for $p_g$ at the optimal $D$ given the corresponding $G$. $\sup_DU(p_g, D)$ is convex in $p_g$ with a unique global optima as proven in theorem %TODO: Weird theorem 1 ref
 	, therefore with sufficiently small updates of $p_g$, $p_g$ converges to $p_x$, concluding the proof.
 \end{proof}
 
