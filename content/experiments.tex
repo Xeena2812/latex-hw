@@ -3,7 +3,18 @@
 We trained adversarial nets on % Corrected typo
 a range of datasets including MNIST \cite{23_lecun1998gradient}, the Toronto Face Database (TFD) \cite{28_susskind2010toronto}, and CIFAR-10 \cite{21_krizhevsky2009learning}. The generator nets used a mixture of rectifier linear activations \cite{19_5459469,9_pmlr-v15-glorot11a} and sigmoid activations, while the discriminator net used maxout \cite{10_goodfellow2013maxoutnetworks} activations. Dropout \cite{17_hinton2012improvingneuralnetworkspreventing} was applied in training the discriminator net. While our theoretical framework permits the use of dropout and other noise at intermediate layer of the generator, we used noise as the input to only the bottommost layer of the generator network.
 
-% TODO: Table 1
+\begin{table}[ht]
+	\begin{tabular}{c|c|c}
+		Model & MNIST & TFD\\
+		\hline
+		DBN \cite{3_pmlr-v28-bengio13} & $138 \pm 2$ & $1909 \pm 66$\\
+		Stacked CAE \cite{3_pmlr-v28-bengio13} & $121 \pm 1.6$ & $\boldsymbol{2110 \pm 50}$\\
+		Deep GSN \cite{6_pmlr-v32-bengio14} & $214 \pm 1.1$ & $1890 \pm 29$\\
+		Adversarial nets & $\boldsymbol{225 \pm 2}$ & $\boldsymbol{2057\ \pm 26}$\\
+	\end{tabular}
+	\caption{Parzen window-based log-likelihood estimates. The reported numbers on MNIST are the mean log-likelihood of samples on test set, with the standard error of the mean computed across examples. On TFD, we computed the standard error across folds of the dataset, with a different $\sigma$ chosen using the validation set of each fold. On TFD, $\sigma$ was cross validated on each fold and mean log-likelihood on each fold were computed. For MNIST we compare against other models of the real-value (rather than binary) version of dataset.}
+\end{table}
+
 We estimate probability of the test set data under $p_g$ by fitting a Gaussian Parzen window to the samples generated with $G$ and reporting the log-likelihood under thus distribution. The $\sigma$ parameter of the Gaussian was obtained by cross validation on the validation et. This procedure was introduced in Breuleux \emph{et al.} \cite{8_6796083} and used for various generative models for which the exact likelihood is not tractable \cite{25_10.5555/3042573.3042804,3_pmlr-v28-bengio13,5_bengio2014deepgenerativestochasticnetworks}. Results are reported in %TODO: Table 1 ref
 . This method of estimating the likelihood has somewhat high variance and does not perform well in high dimensional spaces but it is the best method available to our knowledge. Advances in generative models that can sample but not estimate likelihood directly motivate further research into how to evaluate such models.
 
