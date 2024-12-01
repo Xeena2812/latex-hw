@@ -1,6 +1,6 @@
 \section{Theoretical Results}
 
-The generator $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like algorithm \ref{alg: alg 1} to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
+The generator\index{generator} $G$ implicitly defines a probability distribution $p_g$ as the distribution of the samples $G(\bz)$ obtained when $\bz\sim p_{\bz}$. Therefore, we would like algorithm \ref{alg: alg 1} to converge to a good estimator of  $\pdat$, if given enough capacity and training time. The results of this section are done in a nonparametric setting, e.g. we represent a model wit infinite capacity by studying convergence in the space of probability density functions.
 
 \noindent We will show in section \ref{sec: global opt} that this minimax game has a global optimum for $p_g = \pdat$. We will then show in section \ref{sec: convergence}\chklistlabel{list: chapter ref} that algorithm \ref{alg: alg 1} optimizes equation \ref{eq: equation 1}, thus obtaining the desired result.
 
@@ -38,7 +38,7 @@ The generator $G$ implicitly defines a probability distribution $p_g$ as the dis
 We first consider the optimal discriminator $D$ for any give generator $G$.
 
 \begin{proposition}
-	For $G$ fixed, the optimal discriminator $D$ is
+	For $G$ fixed, the optimal discriminator\index{discriminator} $D$ is
 	\begin{equation}
 		D^{\ast}_G(\bx) = \frac{\pdatx}{\pdatx + p_g(\bx)}\label{eq: equation 2}
 	\end{equation}
@@ -53,7 +53,7 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 	For any $(a, b) \in \mathbb{R}^2 \setminus \{0,0\}$, the function $y\rightarrow a\log(Y)+ b\log(1-y)$ achieves its maximum in $][0,1]$ at $\frac{a}{a+b}$. The discriminator does not need to be defined outside of $Supp(\pdat)\cup Supp(p_g)$, concluding the proof.
 \end{proof}
 
-\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax game in equation \ref{eq: equation 1} can now be reformulate as:
+\noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax\index{minimax} game in equation \ref{eq: equation 1} can now be reformulate as:
 
 \chklistlabel{list: align}
 \begin{align}
@@ -85,7 +85,7 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 
 \subsection{Convergence of Algorithm \ref{alg: alg 1}}\label{sec: convergence}
 \begin{proposition}
-	If $G$ and $D$ have enough capacity, and at each step of algorithm \ref{alg: alg 1}, the discriminator is allowed to reach its optimum given $G$, and $p_g$ is updated so as to improve the criterion
+	If $G$ and $D$ have enough capacity, and at each step of algorithm \ref{alg: alg 1}, the discriminator\index{discriminator} is allowed to reach its optimum given $G$, and $p_g$ is updated so as to improve the criterion
 	\begin{equation*}
 		\exspdat[\log\dastg(\bx)] + \exspg[\log(1-\dastg(\bx))]
 	\end{equation*}
@@ -96,4 +96,4 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 	Consider $V(G,D)=U(p_g,D)$ as a function of $p_g$ as done in the above criterion. Note that $U(p_g,D)$ is convex in $p_g$. The subderivatives of a supremum of  convex functions include the derivative of the function at the point where the maximum is attained. In other words, if $f(x)=\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$ and $f_{\alpha}(x)$ is convex in $x$ for every $\alpha$, then $\partial f_{\beta}(x)\in\partial f$ if $\beta=\arg\sup_{\alpha\in\mathcal{A}}f_{\alpha}(x)$. This is equivalent to computing a gradient descent update for $p_g$ at the optimal $D$ given the corresponding $G$. $\sup_DU(p_g, D)$ is convex in $p_g$ with a unique global optima as proven in theorem \ref{thm: theorem 1}, therefore with sufficiently small updates of $p_g$, $p_g$ converges to $p_x$, concluding the proof.
 \end{proof}
 
-In practice, adversarial nets represent a limited family of $p_g$ distributions via the function $G(\bz; \theta_g)$, and we optimize $\theta_g$ rather than $p_g$ itself. Using a multilayer perceptron to define $G$ introduces multiple critical point in parameter space. However, the excellent performance of multilayer perceptrons in practice suggests that they are a reasonable model to use despite their lack of theoretical guarantees.
+\noindent In practice, adversarial nets\index{adversarial nets} represent a limited family of $p_g$ distributions via the function $G(\bz; \theta_g)$, and we optimize $\theta_g$ rather than $p_g$ itself. Using a multilayer perceptron to define $G$ introduces multiple critical point in parameter space. However, the excellent performance of multilayer perceptrons in practice suggests that they are a reasonable model to use despite their lack of theoretical guarantees.

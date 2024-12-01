@@ -20,6 +20,7 @@
 \usepackage{epsfig}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{makeidx}
 \usepackage{hyperref}
 
 \usetikzlibrary{shapes, calc}
@@ -53,6 +54,7 @@
 \end{tabularx}
 }
 \date{}
+\makeindex
 
 \begin{document}
 
@@ -81,6 +83,8 @@
 \include*{content/advantages}
 \include*{content/conclusion-ack}
 \include*{content/end-table}
+
+\printindex\chklistlabel{list: index}
 
 \chklistlabel{list: bib}
 \bibliography{bib.bib}
