@@ -1,19 +1,19 @@
 \section{Experiments}
 
 We trained adversarial nets on
-a range of datasets including MNIST \cite{23_lecun1998gradient}, the Toronto Face Database (TFD) \cite{28_susskind2010toronto}, and CIFAR-10 \cite{21_krizhevsky2009learning}. The generator\index{generator} nets used a mixture of rectifier linear activations \cite{19_5459469,9_pmlr-v15-glorot11a} and sigmoid activations, while the discriminator\index{discriminator} net used maxout \cite{10_goodfellow2013maxoutnetworks} activations. Dropout \cite{17_hinton2012improvingneuralnetworkspreventing} was applied in training the discriminator net. While our theoretical framework permits the use of dropout and other noise at intermediate layer of the generator, we used noise as the input to only the bottommost layer of the generator network.
+a range of datasets including \acrshort{mnist} \cite{23_lecun1998gradient}, the \acrfull{tfd} \cite{28_susskind2010toronto}, and \acrshort{cifar-10} \cite{21_krizhevsky2009learning}. The generator\index{generator} nets used a mixture of rectifier linear activations \cite{19_5459469,9_pmlr-v15-glorot11a} and sigmoid activations, while the discriminator\index{discriminator} net used maxout \cite{10_goodfellow2013maxoutnetworks} activations. Dropout \cite{17_hinton2012improvingneuralnetworkspreventing} was applied in training the discriminator net. While our theoretical framework permits the use of dropout and other noise at intermediate layer of the generator, we used noise as the input to only the bottommost layer of the generator network.
 
 \begin{table}[ht]
 	\centering
 	\begin{tabular}{c|c|c}
-		Model & MNIST & TFD\\
+		Model & \acrshort{mnist} & \acrshort{tfd}\\
 		\hline
-		DBN \cite{3_pmlr-v28-bengio13} & $138 \pm 2$ & $1909 \pm 66$\\
-		Stacked CAE \cite{3_pmlr-v28-bengio13} & $121 \pm 1.6$ & $\boldsymbol{2110 \pm 50}$\\
-		Deep GSN \cite{6_pmlr-v32-bengio14} & $214 \pm 1.1$ & $1890 \pm 29$\\
+		\acrshort{dbn} \cite{3_pmlr-v28-bengio13} & $138 \pm 2$ & $1909 \pm 66$\\
+		Stacked \acrshort{cae} \cite{3_pmlr-v28-bengio13} & $121 \pm 1.6$ & $\boldsymbol{2110 \pm 50}$\\
+		Deep \acrshort{gsn} \cite{6_pmlr-v32-bengio14} & $214 \pm 1.1$ & $1890 \pm 29$\\
 		Adversarial nets & $\boldsymbol{225 \pm 2}$ & $\boldsymbol{2057\ \pm 26}$\\
 	\end{tabular}
-	\caption{Parzen window-based log-likelihood estimates. The reported numbers on MNIST are the mean log-likelihood of samples on test set, with the standard error of the mean computed across examples. On TFD, we computed the standard error across folds of the dataset, with a different $\sigma$ chosen using the validation set of each fold. On TFD, $\sigma$ was cross validated on each fold and mean log-likelihood on each fold were computed. For MNIST we compare against other models of the real-value (rather than binary) version of dataset.}
+	\caption{Parzen window-based log-likelihood estimates. The reported numbers on \acrshort{mnist} are the mean log-likelihood of samples on test set, with the standard error of the mean computed across examples. On \acrshort{tfd}, we computed the standard error across folds of the dataset, with a different $\sigma$ chosen using the validation set of each fold. On \acrshort{tfd}, $\sigma$ was cross validated on each fold and mean log-likelihood on each fold were computed. For \acrshort{mnist} we compare against other models of the real-value (rather than binary) version of dataset.}
 	\label{tab: table 1}\chklistlabel{list: table}
 \end{table}
 
@@ -27,7 +27,7 @@ In Figures \ref{fig: figure 2} and \ref{fig: figure 3}\chklistlabel{list: image 
 	\subfigure[]{\includegraphics[width=0.45\textwidth]{figures/figure-2-sub-b.png}}
 	\subfigure[]{\includegraphics[width=0.45\textwidth]{figures/figure-2-sub-c.png}}
 	\subfigure[]{\includegraphics[width=0.45\textwidth]{figures/figure-2-sub-d.png}}
-	\caption{Visualization of samples from the model. Rightmost column show the nearest training example of neighboring sample, in order to demonstrate that the model has not memorized the training set. Samples are fair random draws, no cherry-picked. Unlike most other Visualizations of deep generative models, these images show actual samples from the model distributions, not conditional means given samples of hidden units. Moreover, these samples are uncorrelated because the sampling process does not depend on Markov chain mixing. (a) MNIST (b) TFD (c) CIFAR-10 (fully connected model) (d) CIFAR-10 (convolutional discriminator and ``deconvolutional'' generator)}
+	\caption{Visualization of samples from the model. Rightmost column show the nearest training example of neighboring sample, in order to demonstrate that the model has not memorized the training set. Samples are fair random draws, not cherry-picked. Unlike most other visualizations of deep generative models, these images show actual samples from the model distributions, not conditional means given samples of hidden units. Moreover, these samples are uncorrelated because the sampling process does not depend on Markov chain mixing. (a) \acrshort{mnist} (b) \acrshort{tfd} (c) \acrshort{cifar-10} (fully connected model) (d) \acrshort{cifar-10} (convolutional discriminator and ``deconvolutional'' generator)}
 	\label{fig: figure 2}
 \end{figure}
 
@@ -46,13 +46,13 @@ In Figures \ref{fig: figure 2} and \ref{fig: figure 3}\chklistlabel{list: image 
 	\begin{tabularx}{\textwidth}{>{\raggedright}c|X|X|X|X}%{c|l|l|l|l}
 		& Deep directed graphical models & Deep undirected graphical models & Generative autoencoders & Adversarial models\\
 		\hline
-		Training & Inference needed during training. & Inference needed during training. MCMC needed to approximate partition function gradient. & Enforced tradeoff between mixing and power of reconstruction generation. & Synchronizing the discriminator with the generator. Helvetica\\
+		Training & Inference needed during training. & Inference needed during training. \acrshort{mcmc} needed to approximate partition function gradient. & Enforced tradeoff between mixing and power of reconstruction generation. & Synchronizing the discriminator with the generator. Helvetica.\\
 		\hline
-		Inference & Learned approximate inference & Variational inference & MCMC-based inference & Learned approximate inference\\
+		Inference & Learned approximate inference & Variational inference & \acrshort{mcmc}-based inference & Learned approximate inference\\
 		\hline
 		Sampling & No difficulties & Requires Markov chain & Requires Markov chain & No difficulties\\
 		\hline
-		Evaluating $p(x)$ & Intractable, may be approximated with AIS & Intractable, may be approximated with AIS & Not explicitly represented, may be approximated with Parzen density estimation & Not explicitly represented, may be approximated with Parzen density estimation\\
+		Evaluating $p(x)$ & Intractable, may be approximated with \acrshort{ais} & Intractable, may be approximated with \acrshort{ais} & Not explicitly represented, may be approximated with Parzen density estimation & Not explicitly represented, may be approximated with Parzen density estimation\\
 		\hline
 		Model design & Nearly all models incur extreme difficulty & Careful design needed to ensure multiple properties & Any differentiable function is theoretically permitted & Any differentiable function is theoretically permitted\\
 	\end{tabularx}

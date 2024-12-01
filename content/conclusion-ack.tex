@@ -6,7 +6,7 @@ This framework admits many straightforward extensions:
 	\item A \emph{conditional generative} model $p(\bz | \boldsymbol{c})$ can be obtained by adding $\boldsymbol{c}$ as input to both $G$ and $D$.\chklistlabel{list: list}
 	\item \emph{Learned approximate inference} can ber performed by training an auxiliary network to predict $\bz$ given $\bx$. This is similar to the inference net trained by the wake-sleep algorithm \cite{15_doi:10.1126/science.7761831} but with the advantage that the inference net may be trained for a fixed generator net after the generator had finished training.\label{item: item 2}
 	\item One can approximately model all conditionals $p(\bx_S | \bx_{\cancel{S}})$
-	where $S$ is a subset of the indices of $\bx$ by training a family of conditional model that share parameters. Essentially, one can use adversarial nets to implement a stochastic extension of the deterministic MP-DBM \cite{11_NIPS2013_0bb4aec1}.
+	where $S$ is a subset of the indices of $\bx$ by training a family of conditional model that share parameters. Essentially, one can use adversarial nets to implement a stochastic extension of the deterministic \acrshort{mp-dbm} \cite{11_NIPS2013_0bb4aec1}.
 	\item \emph{Semi-supervised learning}: features from the discriminator or inference net could improve performance of classifiers when limited labeled data is available.
 	\item \emph{Efficiency improvements}: training could be accelerated greatly by devising better methods for coordinating $G$ and $D$ or determining better distributions to sample $\bz$ from during training.
 \end{enumerate}

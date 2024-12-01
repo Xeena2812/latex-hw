@@ -48,9 +48,9 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 	The training criterion for the discriminator $D$, given any generator $G$, is to maximize the quantity $V(G, D)$
 	\begin{align}
 		V(G, D) &= \int_{\bx}{\pdatx}\log(D(\bx))dx + \int_{\bz}{p_{\bz}(\bz)\lomdgz}dz\nonumber\\
-		&= \int_{\bx}{\pdatx}\log(D(\bx)) + \int_{\bz}{p_{\bz}(\bz)\log(1 - D(\bx))}dx \label{eq: equation 3}
+		&= \int_{\bx}{\pdatx\log(D(\bx)) + p_{\bz}(\bz)\log(1 - D(\bx))}dx \label{eq: equation 3}
 	\end{align}
-	For any $(a, b) \in \mathbb{R}^2 \setminus \{0,0\}$, the function $y\rightarrow a\log(Y)+ b\log(1-y)$ achieves its maximum in $][0,1]$ at $\frac{a}{a+b}$. The discriminator does not need to be defined outside of $Supp(\pdat)\cup Supp(p_g)$, concluding the proof.
+	For any $(a, b) \in \mathbb{R}^2 \setminus \{0,0\}$, the function $y\rightarrow a\log(Y)+ b\log(1-y)$ achieves its maximum in $[0,1]$ at $\frac{a}{a+b}$. The discriminator does not need to be defined outside of $Supp(\pdat)\cup Supp(p_g)$, concluding the proof.
 \end{proof}
 
 \noindent Note that the training objective for $D$ can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y=y|\bx)$, where $Y$ indicates whether $\bx$ comes from $\pdat$ (with $y=1$) or from $p_g$ (with $y=0$). The minimax\index{minimax} game in equation \ref{eq: equation 1} can now be reformulate as:
@@ -76,7 +76,7 @@ We first consider the optimal discriminator $D$ for any give generator $G$.
 	\begin{equation}
 		C(G)=-\log(4)+KL\bigg(\pdat\Vert\frac{\pdat+p_g}{2}\bigg)+KL\bigg(p_g\Vert\frac{\pdat+p_g}{2}\bigg)
 	\end{equation}
-	where KL is the Kullback–Leibler divergence. We recognize in the previous expression the Jensen–Shannon divergence between the model’s distribution and the data generating process:
+	where \acrshort{kl} is the \Acrlong{kl}. We recognize in the previous expression the Jensen–Shannon divergence between the model’s distribution and the data generating process:
 	\begin{equation}
 		C(G)=-\log(4)+2\cdot JSD(\pdat\Vert p_g)
 	\end{equation}
